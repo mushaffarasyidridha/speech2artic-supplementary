@@ -1,7 +1,6 @@
 # Supplementary material — From Speech to Articulator Movement
 
 Videos of articulator movement predicted from speech, for the ten test speakers of the paper.
-No test speaker was seen during training.
 
 ## Videos (`videos/`)
 
@@ -37,7 +36,7 @@ its mean equals the real mean. The videos therefore compare **movement**, as the
 
 ## The 19 distances
 
-Numbered as in Fig. 1 of the paper.
+Numbered as in Fig. 2 of the paper.
 
 | # | distance |
 |---|---|
