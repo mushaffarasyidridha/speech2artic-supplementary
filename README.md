@@ -5,33 +5,35 @@ No test speaker was seen during training.
 
 ## Videos (`videos/`)
 
-One video per test speaker, real time (20.8 frames/s), with the speech that drives the models.
-Every frame shows three panels on the real-time MRI image:
+One video per test speaker (`videos/<speaker>.mp4`), real time (20.8 frames/s), with the speech that
+drives the models. No test speaker was seen during training.
+
+**Top: three MRI panels, every pair of contours**
 
 | panel | lines |
 |---|---|
-| REAL vs NEW | white: contour from the MRI · green: speech → 19 vocal-tract distances → solver (proposed) |
-| REAL vs OLD | white: contour from the MRI · orange: earlier speech → contour model |
+| REAL vs NEW | white: contour from the MRI · green: proposed, speech → 19 vocal-tract distances → solver |
+| REAL vs OLD | white · orange: earlier speech → contour model |
 | NEW vs OLD | green vs orange |
 
-Both models are given the speaker's mean vocal-tract shape: the solver starts from the mean contour of
-the recording, and the earlier model's contour is shifted so that its mean equals the real mean. The
-videos therefore compare **movement**, as the paper does.
+**Bottom: four of the 19 distances over time** (6 s scrolling window, yellow line = current frame):
+lip aperture, tongue to mid hard palate, velopharyngeal port, upper tongue root to pharyngeal wall.
 
-## Model output before and after the solver (`videos/solver_check/`)
-
-The speech model outputs the 19 distances, not a contour; the solver turns them into a contour. One
-video per test speaker shows whether the solver changes the prediction:
-
-| panel | lines |
+| line | meaning |
 |---|---|
-| left | MRI image · white: real contour · green: solver contour |
-| right | 4 of the 19 distances, 6 s scrolling window: white real · blue model output · green dashed solver output, measured on its contour |
+| white | real distance, measured on the MRI contour |
+| blue (thick) | NEW model output: the 19 distances themselves, before any solver |
+| green dashed | NEW after the solver, measured again on the solved contour |
+| orange | OLD model, measured on its contour |
 
-Each plot title gives the velocity correlation for every pair (model–real, solver–real, solver–model).
-Over the 40 test recordings, the solved distances follow the model output at velocity r = 0.97, and
-the velocity correlation with the real movement drops only from 0.53 (model output) to 0.51 (after
-the solver). The solver follows the upper tongue root and the velum tip least closely (r ≈ 0.8).
+Each plot title gives the velocity correlation for new–real, old–real and solver–new; the header
+gives the same, averaged over all 19 distances. The solver follows the model output closely (velocity
+r = 0.97 over the 40 test recordings; the velocity correlation with the real movement goes from 0.53
+before to 0.51 after the solver), so the green contour shows what the model predicted.
+
+All models are given the speaker's mean vocal-tract shape: the model output gets the recording's mean
+distances, the solver starts from the mean contour, and the earlier model's contour is shifted so that
+its mean equals the real mean. The videos therefore compare **movement**, as the paper does.
 
 ## The 19 distances
 
